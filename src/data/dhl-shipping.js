@@ -1,0 +1,158 @@
+export const DHL_SERVICES = [
+  { value: "express-domestic", label: "DHL Express Domestic" },
+  { value: "paket-same-day", label: "DHL Paket Same Day (City)" },
+  { value: "paket-national", label: "DHL Paket National" },
+  { value: "paket-international", label: "DHL Paket International" },
+  { value: "ecommerce", label: "DHL eCommerce" },
+  { value: "express-worldwide", label: "DHL Express Worldwide" },
+];
+
+export const DEFAULT_SHIPPING_RULES = [
+  {
+    id: "fast-delivery",
+    priority: 1,
+    condition: "Fast Delivery",
+    description: "Order contains expedited shipping — Amazon Express, Next-Day, Premium",
+    matchKeywords: "Express, Next-Day, Premium, Same-Day",
+    service: "express-domestic",
+    enabled: true,
+  },
+  {
+    id: "within-city",
+    priority: 2,
+    condition: "DHL Within City",
+    description: "Delivery address inside the configured city zone",
+    matchKeywords: "",
+    service: "paket-same-day",
+    enabled: true,
+  },
+  {
+    id: "outer-city",
+    priority: 3,
+    condition: "DHL Outer City",
+    description: "Domestic UK delivery outside the city zone",
+    matchKeywords: "",
+    service: "paket-national",
+    enabled: true,
+  },
+  {
+    id: "default",
+    priority: 4,
+    condition: "Default",
+    description: "Fallback for international and unmatched orders",
+    matchKeywords: "",
+    service: "paket-international",
+    enabled: true,
+  },
+];
+
+export const DEFAULT_CITY_ZONE = {
+  warehouseCity: "London",
+  includedCities: "London, Westminster, Camden, Islington, Southwark",
+};
+
+/** DHL product name differs by region / state — map destination to API service code */
+export const DEFAULT_REGION_SERVICES = [
+  {
+    id: "uk-england",
+    region: "England",
+    states: "London, Manchester, Birmingham, Leeds",
+    dhlServiceCode: "V01PAK",
+    dhlServiceName: "DHL Paket UK Domestic",
+    service: "paket-national",
+    enabled: true,
+  },
+  {
+    id: "uk-scotland",
+    region: "Scotland",
+    states: "Edinburgh, Glasgow, Aberdeen",
+    dhlServiceCode: "V53WPAK",
+    dhlServiceName: "DHL Scotland Parcel",
+    service: "paket-national",
+    enabled: true,
+  },
+  {
+    id: "uk-wales",
+    region: "Wales",
+    states: "Cardiff, Swansea, Newport",
+    dhlServiceCode: "V01PAK",
+    dhlServiceName: "DHL Paket UK Domestic",
+    service: "paket-national",
+    enabled: true,
+  },
+  {
+    id: "eu-central",
+    region: "EU Central",
+    states: "Germany, Netherlands, Belgium",
+    dhlServiceCode: "V53WPAK",
+    dhlServiceName: "DHL Paket International EU",
+    service: "paket-international",
+    enabled: true,
+  },
+  {
+    id: "eu-south",
+    region: "EU South",
+    states: "France, Spain, Italy",
+    dhlServiceCode: "V54EPAK",
+    dhlServiceName: "DHL EuroPaket",
+    service: "paket-international",
+    enabled: true,
+  },
+  {
+    id: "international",
+    region: "International",
+    states: "US, Canada, Australia, Rest of World",
+    dhlServiceCode: "P",
+    dhlServiceName: "DHL Express Worldwide",
+    service: "express-worldwide",
+    enabled: true,
+  },
+];
+
+/** Parcel tiers — weight & dimensions determine packaging and eligible DHL service */
+export const DEFAULT_DIMENSION_RULES = [
+  {
+    id: "small",
+    tier: "Small",
+    maxWeightKg: "2",
+    maxLengthCm: "30",
+    maxWidthCm: "25",
+    maxHeightCm: "15",
+    packaging: "Standard corrugated box",
+    service: "paket-same-day",
+    enabled: true,
+  },
+  {
+    id: "medium",
+    tier: "Medium",
+    maxWeightKg: "10",
+    maxLengthCm: "60",
+    maxWidthCm: "40",
+    maxHeightCm: "40",
+    packaging: "Reinforced double-wall box",
+    service: "paket-national",
+    enabled: true,
+  },
+  {
+    id: "large",
+    tier: "Large",
+    maxWeightKg: "25",
+    maxLengthCm: "120",
+    maxWidthCm: "80",
+    maxHeightCm: "80",
+    packaging: "Heavy-duty carton + edge protectors",
+    service: "paket-national",
+    enabled: true,
+  },
+  {
+    id: "oversize",
+    tier: "Oversize",
+    maxWeightKg: "50",
+    maxLengthCm: "200",
+    maxWidthCm: "120",
+    maxHeightCm: "100",
+    packaging: "Pallet / freight wrap",
+    service: "express-worldwide",
+    enabled: true,
+  },
+];
